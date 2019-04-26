@@ -21,7 +21,7 @@ class MilwaukeePersonScraper(LegistarAPIPersonScraper, Scraper):
 
         web_scraper = LegistarPersonScraper(
             requests_per_minute=self.requests_per_minute)
-        web_scraper.MEMBERLIST = LegistarPersonScraper('https://milwaukee.legistar.com/DepartmentDetail.aspx?ID=1998&GUID=74273156-5389-46F3-9D09-3D850BDE32A1')
+        web_scraper.MEMBERLIST ='https://milwaukee.legistar.com/DepartmentDetail.aspx?ID=1998&GUID=74273156-5389-46F3-9D09-3D850BDE32A1'
         #web_scraper.ALL_MEMBERS = '3:3'
 
         if self.cache_storage:
