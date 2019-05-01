@@ -40,8 +40,9 @@ class LegistarPersonScraper(LegistarScraper):
                     committees = self.parseDataTable(committee_table)
 
                     yield councilman, committees
-
+                    print(councilman, '43')
                 else:
+                    print(councilman, '45')
                     yield councilman
 
 

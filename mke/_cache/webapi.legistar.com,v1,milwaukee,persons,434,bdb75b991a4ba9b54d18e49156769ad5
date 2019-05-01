@@ -1,0 +1,14 @@
+status: 200
+encoding: utf-8
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/10.0
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+GranicusServer: grasp-legapi2
+Date: Wed, 01 May 2019 03:42:18 GMT
+Content-Length: 721
+
+{"PersonId":434,"PersonGuid":"56C5DCF6-D5E2-4F73-A0F2-07543D7217F2","PersonLastModifiedUtc":"2014-05-27T22:22:20.227","PersonRowVersion":"AAAAAAH+/iE=","PersonFirstName":"Michael","PersonLastName":"Murphy","PersonFullName":"ALD. MURPHY","PersonActiveFlag":1,"PersonUsedSponsorFlag":0,"PersonAddress1":"City Hall, Room 205\r\n200 E. Wells St.\r\nMilwaukee WI, 53202","PersonCity1":null,"PersonState1":null,"PersonZip1":null,"PersonPhone":"414-286-2221","PersonFax":"414-286-3456","PersonEmail":"mmurph@milwaukee.gov","PersonWWW":"http://www.milwaukee.gov/district10","PersonAddress2":null,"PersonCity2":null,"PersonState2":null,"PersonZip2":null,"PersonPhone2":null,"PersonFax2":null,"PersonEmail2":null,"PersonWWW2":null}
