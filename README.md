@@ -1,3 +1,6 @@
+## NEED TO ADD ADDITIONAL REQs AND INSTRUCTIONS HERE
+
+
 Python Legistar Scraper
 =======================
 
