@@ -8,7 +8,7 @@ Server: Microsoft-IIS/10.0
 X-AspNet-Version: 4.0.30319
 X-Powered-By: ASP.NET
 GranicusServer: grasp-legapi2
-Date: Wed, 01 May 2019 03:42:25 GMT
+Date: Fri, 03 May 2019 02:20:05 GMT
 Content-Length: 703
 
 {"PersonId":2109,"PersonGuid":"A16B03AD-BB67-4816-9C4F-5A528C404001","PersonLastModifiedUtc":"2014-05-27T22:22:20.227","PersonRowVersion":"AAAAAAHyMfM=","PersonFirstName":"Milele A.","PersonLastName":"Coggs","PersonFullName":"ALD. COGGS","PersonActiveFlag":1,"PersonUsedSponsorFlag":0,"PersonAddress1":"200 East Wells Street\r\nRoom 205\r\nMilwaukee, WI 53202","PersonCity1":null,"PersonState1":null,"PersonZip1":null,"PersonPhone":"414-286-2221","PersonFax":"","PersonEmail":"mcoggs@milwaukee.gov","PersonWWW":"http://www.milwaukee.gov/district6","PersonAddress2":null,"PersonCity2":null,"PersonState2":null,"PersonZip2":null,"PersonPhone2":null,"PersonFax2":null,"PersonEmail2":null,"PersonWWW2":null}

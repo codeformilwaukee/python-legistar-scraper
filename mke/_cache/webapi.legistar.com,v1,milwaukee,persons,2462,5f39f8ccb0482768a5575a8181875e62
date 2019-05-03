@@ -8,7 +8,7 @@ Server: Microsoft-IIS/10.0
 X-AspNet-Version: 4.0.30319
 X-Powered-By: ASP.NET
 GranicusServer: grasp-legapi2
-Date: Wed, 01 May 2019 03:42:27 GMT
+Date: Fri, 03 May 2019 02:20:05 GMT
 Content-Length: 695
 
 {"PersonId":2462,"PersonGuid":"EC42A8D4-B5F4-42CD-B0B0-D8AD45169C71","PersonLastModifiedUtc":"2014-05-27T22:22:20.227","PersonRowVersion":"AAAAAAHaT08=","PersonFirstName":"Jose","PersonLastName":"Perez","PersonFullName":"ALD. PEREZ","PersonActiveFlag":1,"PersonUsedSponsorFlag":0,"PersonAddress1":"Room 205, City Hall\r200 E. Wells Street\rMilwaukee  WI, 53202","PersonCity1":"","PersonState1":"","PersonZip1":"","PersonPhone":"414-286-2221","PersonFax":"414-286-3456","PersonEmail":"jperez@milwaukee.gov","PersonWWW":"http://www.milwaukee.gov/district12","PersonAddress2":"","PersonCity2":"","PersonState2":"","PersonZip2":"","PersonPhone2":"","PersonFax2":"","PersonEmail2":"","PersonWWW2":""}

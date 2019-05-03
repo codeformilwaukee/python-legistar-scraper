@@ -8,7 +8,7 @@ Server: Microsoft-IIS/10.0
 X-AspNet-Version: 4.0.30319
 X-Powered-By: ASP.NET
 GranicusServer: grasp-legapi2
-Date: Wed, 01 May 2019 03:42:21 GMT
+Date: Fri, 03 May 2019 02:20:00 GMT
 Content-Length: 717
 
 {"PersonId":1596,"PersonGuid":"AABD0F49-5D16-407C-AC04-F48E310798AF","PersonLastModifiedUtc":"2014-05-27T22:22:20.227","PersonRowVersion":"AAAAAAHWJ+I=","PersonFirstName":"Terry ","PersonLastName":"Witkowski","PersonFullName":"ALD. WITKOWSKI","PersonActiveFlag":1,"PersonUsedSponsorFlag":0,"PersonAddress1":"200 E. Wells Street\rRoom 205\rMilwaukee WI, 53202\r","PersonCity1":null,"PersonState1":null,"PersonZip1":null,"PersonPhone":"414-286-2221","PersonFax":"414-286-3456","PersonEmail":"twitko@milwaukee.gov","PersonWWW":"http://www.milwaukee.gov/district13","PersonAddress2":null,"PersonCity2":null,"PersonState2":null,"PersonZip2":null,"PersonPhone2":null,"PersonFax2":null,"PersonEmail2":null,"PersonWWW2":null}

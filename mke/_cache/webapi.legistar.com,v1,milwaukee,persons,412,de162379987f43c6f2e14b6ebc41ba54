@@ -8,7 +8,7 @@ Server: Microsoft-IIS/10.0
 X-AspNet-Version: 4.0.30319
 X-Powered-By: ASP.NET
 GranicusServer: grasp-legapi2
-Date: Wed, 01 May 2019 03:42:23 GMT
+Date: Fri, 03 May 2019 02:20:03 GMT
 Content-Length: 636
 
 {"PersonId":412,"PersonGuid":"E0BA5E08-DCD9-4301-825A-1B78FE2E32D3","PersonLastModifiedUtc":"2014-05-27T22:22:20.227","PersonRowVersion":"AAAAAAGyY0U=","PersonFirstName":"T. Anthony","PersonLastName":"Zielinski","PersonFullName":"ALD. ZIELINSKI","PersonActiveFlag":1,"PersonUsedSponsorFlag":0,"PersonAddress1":"City Hall, Room 205\r\n200 E. Well St.\r\nMilwaukee, WI 53202","PersonCity1":"","PersonState1":"","PersonZip1":"","PersonPhone":"286-2221","PersonFax":"","PersonEmail":"","PersonWWW":"","PersonAddress2":"","PersonCity2":"","PersonState2":"","PersonZip2":"","PersonPhone2":"","PersonFax2":"","PersonEmail2":"","PersonWWW2":""}

@@ -8,7 +8,7 @@ Server: Microsoft-IIS/10.0
 X-AspNet-Version: 4.0.30319
 X-Powered-By: ASP.NET
 GranicusServer: grasp-legapi2
-Date: Wed, 01 May 2019 03:42:28 GMT
+Date: Fri, 03 May 2019 02:20:06 GMT
 Content-Length: 592
 
 {"PersonId":2748,"PersonGuid":"ADDE4C15-0731-4E0F-8596-3783F73B6585","PersonLastModifiedUtc":"2014-09-17T14:39:05.21","PersonRowVersion":"AAAAAAHWKl4=","PersonFirstName":"Russell W.","PersonLastName":"Stamper","PersonFullName":"ALD. STAMPER","PersonActiveFlag":1,"PersonUsedSponsorFlag":0,"PersonAddress1":"","PersonCity1":"","PersonState1":"","PersonZip1":"","PersonPhone":"","PersonFax":"","PersonEmail":"Russell.Stamper@milwaukee.gov","PersonWWW":"","PersonAddress2":"","PersonCity2":"","PersonState2":"","PersonZip2":"","PersonPhone2":"","PersonFax2":"","PersonEmail2":"","PersonWWW2":""}

@@ -86,4 +86,56 @@ class MilwaukeePersonScraper(LegistarAPIPersonScraper, Scraper):
                 person_api_url, person_web_url = source_urls
                 p.add_source(person_api_url, note='api')
                 p.add_source(person_web_url, note='web')
+
+                members[member] = p
+        
+        for body in self.bodies():
+            
+            #pdb.set_trace() 
+            if body['BodyName'] == 'COMMON COUNCIL':
+                o = Organization(body['BodyName'],
+                                classification='committee',
+                                parent_id={'name': 'Milwaukee Common Council'})
+                #pdb.set_trace()                 
+                o.add_source(self.BASE_URL + '/bodies/{BodyName}'.format(**body), note='api')
+                o.add_source(self.WEB_URL + '/DepartmentDetail.aspx?ID={BodyName}&GUID={BodyGuid}'.format(**body), note='web')
+                
+                #The legistar does not list who the president is...
+                for office in self.body_offices(body):
+                    if office['OfficeRecordLastName'] == 'Hamilton':
+                        role = "President"
+                    else:
+                        role = "Member"
+
+                person = office['OfficeRecordFullName'].strip()
+                if person in members:
+                    p = members[person]
+                else:
+                    p = Person(person)
+
+                    source_urls = self.person_sources_from_office(term)
+                    person_api_url, person_web_url = source_urls
+                    p.add_source(person_api_url, note='api')
+                    p.add_source(person_web_url, note='web')
+
+                    members[person] = p
+
+                p.add_membership(body['BodyName'],
+                                role = role,
+                                start_date = self.toDate(office['OfficeRecordStartDate']),
+                                end_date= self.toDate(office['OfficeRecordEndDate']))
+            yield o
+        
+        for body in self.bodies(): 
+            #pdb.set_trace()
+            if body['BodyTypeId'] == body_types['Policies and Standards Committee']:
+                o = Organization(body['BodyName'],
+                        classification='committee',
+                        parent_id={'name' : 'Milwaukee Common Council'})
+                o.add_source(self.BASE_URL + '/bodies/{BodyName}'.format(**body), note='api')
+                o.add_source(self.WEB_URL + '/DepartmentDetail.aspx?ID={BodyName}&GUID={BodyGuid}'.format(**body), note='web')
+                yield o   
+
+        for p in  members.values():
+            yield p
         #pass

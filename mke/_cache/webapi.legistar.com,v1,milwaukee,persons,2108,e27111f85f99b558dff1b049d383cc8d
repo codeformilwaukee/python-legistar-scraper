@@ -8,7 +8,7 @@ Server: Microsoft-IIS/10.0
 X-AspNet-Version: 4.0.30319
 X-Powered-By: ASP.NET
 GranicusServer: grasp-legapi2
-Date: Wed, 01 May 2019 03:42:25 GMT
+Date: Fri, 03 May 2019 02:20:04 GMT
 Content-Length: 675
 
 {"PersonId":2108,"PersonGuid":"58458656-BA74-4780-A075-1F33A7D6B6B4","PersonLastModifiedUtc":"2014-05-27T22:22:20.227","PersonRowVersion":"AAAAAAHwHns=","PersonFirstName":"Nicholas","PersonLastName":"Kovac","PersonFullName":"ALD. KOVAC","PersonActiveFlag":1,"PersonUsedSponsorFlag":0,"PersonAddress1":"200 E. Wells St.\r\nRoom 205\r\nMilwaukee, WI 53202","PersonCity1":"","PersonState1":"","PersonZip1":"","PersonPhone":"414-286-2221","PersonFax":"","PersonEmail":"nkovac@milwaukee.gov","PersonWWW":"http://www.milwaukee.gov/district3","PersonAddress2":"","PersonCity2":"","PersonState2":"","PersonZip2":"","PersonPhone2":"","PersonFax2":"","PersonEmail2":"","PersonWWW2":""}
