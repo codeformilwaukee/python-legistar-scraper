@@ -1,0 +1,19 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pupa = "==0.9.0"
+"a129fdf" = {file = "https://github.com/opencivicdata/python-opencivicdata-django/zipball/master"}
+lxml = "*"
+sh = "*"
+pytest = "==4.2.0"
+pytest-mock = "==1.10.1"
+requests-mock = "==1.5.2"
+idna = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
