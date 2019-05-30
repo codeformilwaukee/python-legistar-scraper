@@ -20,7 +20,17 @@ class MilwaukeeBillScraper(LegistarAPIBillScraper, Scraper):
     BASE_URL = 'http://webapi.legistar.com/v1/milwaukee'
     BASE_WEB_URL = 'https://milwaukee.legistar.com'
     TIMEZONE = "US/Central"
-
+    
+    def session(self, action_date):
+        localize = pytz.timezone(self.TIMEZONE).localize
+        # 2011 Kill Bill https://chicago.legistar.com/LegislationDetail.aspx?ID=907351&GUID=6118274B-A598-4584-AA5B-ABDFA5F79506
+        if action_date < localize(datetime.datetime(2012, 4, 3)):
+            return "2008"
+        # 2015 Kill Bill https://chicago.legistar.com/LegislationDetail.aspx?ID=2321351&GUID=FBA81B7C-8A33-4D6F-92A7-242B537069B3
+        elif action_date < localize(datetime.datetime(2016, 5, 5)):
+            return "2012"
+        else:
+            return "2016"
 
     def sponsorships(self, matter_id):
         for i, sponsor in enumerate(self.sponsors(matter_id)):
@@ -95,6 +105,192 @@ class MilwaukeeBillScraper(LegistarAPIBillScraper, Scraper):
             yield bill_action, votes
 
             
-    def scrape(self):
+    def scrape(self, window=3):
         # needs to be implemented
-        pass
+        n_days_ago = datetime.datetime.utcnow() - datetime.timedelta(float(window))
+        for matter in self.matters(n_days_ago):
+            matter_id = matter['MatterId']
+            date = matter['MatterIntroDate']
+            title = matter['MatterTitle']
+            identifier = matter['MatterFile']
+
+            # If a bill has a duplicate action item that's causing the entire scrape
+            # to fail, add it to the `problem_bills` array to skip it.
+            # For the time being...nothing to skip!
+
+            problem_bills = []
+
+            if identifier in problem_bills:
+                continue
+
+            if not all((date,title,identifier)):
+                continue
+            
+            bill_session = self.session(self.toTime(date))
+            bill_type = BILL_TYPES[matter['MatterTypeName']]
+
+            if identifier.startswith('S'):
+                alternate_identifiers = [identifier]
+                identifier = identifier[1:]
+            else:
+                alternate_identifiers = []
+
+            bill = Bill(identifier = identifier,
+                        legislative_session=bill_session,
+                        title=title,
+                        classification=bill_type,
+                        from_organization={"name":"Milwaukee Common Council"})
+
+            legistar_web =  matter['legistar_url']
+
+            legistar_api = 'http://webapi.legistar.com/v1/chicago/matters/{0}'.\
+                format(matter_id)
+
+            bill.add_source(legistar_web, note='web')
+            bill.ass_source(legistar_api, note='api')
+
+            for identifier in alternate_identifiers:
+                bill.add_identifier(identifier)
+
+            for action, vote in self.actions(matter_id) :
+                responsible_person = action.pop('responsible person')
+                act = bill.add_action(**action)
+
+                if responsible_person:
+                    act.add_related_entity(responsible_person,
+                    'person', entity_id = _make_pseudo_id(name=responsible_person))
+
+                if action['description'] == 'Referred' :
+                    body_name = matter['MatterBodyName']
+                    if body_name != 'City Council' :
+                        act.add_related_entity(body_name,
+                                                'organization',
+                                                entity_id = _make_pseudo_id(name=body_name))
+
+                result, votes = vote
+                if result:
+                    vote_event = VoteEvent(legislative_session = bill.legislative_session,
+                                          motion_text=action['description'],
+                                          organization=action['organization'],
+                                          classification=None,
+                                          start_date=action['date'],
+                                          result=result,
+                                          bill=bill)
+
+                    vote_event.add_source(legistar_Web)
+                    vote_event.add_source(legistar_api + '/histories')
+
+                    for vote in votes:
+                        raw_option = vote['VoteValueName'].lower()
+                        clean_option = self.Vote_Options.get(raw_option, raw_option)
+
+                        vote_event.vote(clean_option, vote['VotePersonName'].strip())
+
+                    yield vote_event
+
+
+                for sponsorship in self.sponsorships(matter_id):
+                    bill.add_sponsorship(**sponsorship)
+
+                for topic in self.topics(matter_id) :
+                    bill.add_subject(topic['MatterIndexName'].strip())
+
+                for attachment in self.attachments(matter_id):
+                    if attachment['MatterAttachmentName']:
+                        bill.add_version_link(attachment['MatterAttachmentName'],
+                        attachment['MatterAttachmentHyperlink'],
+                        media_type="application/pdf")
+
+                bill.extras = {'local_classification': matter['MatterTypeName']}
+
+                text = self.text(matter_id)
+
+                if text:
+                    if text['MatterTextPlain']:
+                        bill.extras['plain_text'] = text['MatterTextPlain']
+
+                    if text['MatterTextRtf']:
+                        bill.extras['rtf_text'] = text['MatterTextRtf'].replace(u'\u0000','')
+                
+                yield bill
+        #pass
+
+
+
+#CHICAGO'S
+ACTION = {'Direct Introduction':
+          {'ocd': 'introduction', 'order': 0},
+          'Introduced (Agreed Calendar)':
+              {'ocd': 'introduction', 'order': 0},
+          'Rules Suspended - Immediate Consideration':
+              {'ocd': 'introduction', 'order': 0},
+
+          'Referred':
+              {'ocd': 'referral-committee', 'order': 1},
+          'Re-Referred':
+              {'ocd': 'referral-committee', 'order': 1},
+          'Substituted in Committee':
+              {'ocd': 'substitution', 'order': 1},
+          'Amended in Committee':
+              {'ocd': 'amendment-passage', 'order': 1},
+          'Withdrawn':
+              {'ocd': 'withdrawal', 'order': 1},
+          'Remove Co-Sponsor(s)':
+              {'ocd': None, 'order': 1},
+          'Add Co-Sponsor(s)':
+              {'ocd': None, 'order': 1},
+          'Recommended for Re-Referral':
+              {'ocd': None, 'order': 1},
+          'Committee Discharged':
+              {'ocd': 'committee-passage', 'order': 1},
+          'Held in Committee':
+              {'ocd': 'committee-failure', 'order': 1},
+          'Recommended Do Not Pass':
+              {'ocd': 'committee-passage-unfavorable', 'order': 1},
+          'Recommended to Pass':
+              {'ocd': 'committee-passage-favorable', 'order': 1},
+
+          'Deferred and Published':
+              {'ocd': None, 'order': 2},
+          'Amended in City Council':
+              {'ocd': 'amendment-passage', 'order': 2},
+          'Failed to Pass':
+              {'ocd': 'failure', 'order': 2},
+          'Passed as Amended':
+              {'ocd': 'passage', 'order': 2},
+          'Adopted':
+              {'ocd': 'passage', 'order': 2},
+          'Approved':
+              {'ocd': 'passage', 'order': 2},
+          'Passed':
+              {'ocd': 'passage', 'order': 2},
+          'Approved as Amended':
+              {'ocd': 'passage', 'order': 2},
+          'Passed as Substitute':
+              {'ocd': 'passage', 'order': 2},
+          'Adopted as Substitute':
+              {'ocd': None, 'order': 2},
+          'Placed on File':
+              {'ocd': 'filing', 'order': 2},
+          'Tabled':
+              {'ocd': 'deferral', 'order': 2},
+          'Vetoed':
+              {'ocd': 'failure', 'order': 2},
+
+          'Published in Special Pamphlet':
+              {'ocd': None, 'order': 3},
+          'Signed by Mayor':
+              {'ocd': 'executive-signature', 'order': 3},
+
+          'Repealed':
+              {'ocd': None, 'order': 4}, }
+
+
+BILL_TYPES = {'Ordinance': 'ordinance',
+              'Resolution': 'resolution',
+              'Order': 'order',
+              'Claim': 'claim',
+              'Oath of Office': None,
+              'Communication': None,
+              'Appointment': 'appointment',
+              'Report': None}
